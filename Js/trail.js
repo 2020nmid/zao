@@ -15,7 +15,6 @@
        }
    }
    var alist=document.querySelectorAll(".list li");
-   alist[0].style.background="red";
    for(let i=0;i<alist.length;i++){
       alist[i].onclick=function(){
         for(let i=0;i<alist.length-2;i++){

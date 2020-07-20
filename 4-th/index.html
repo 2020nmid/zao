@@ -1,0 +1,75 @@
+<!-- HTML 5  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" url="https://www.baidu.com/" id="abc">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册及登录</title>
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <script type="text/javascript" src="js/demo.js" async></script>
+    <style>
+        fieldset{
+            /*border: 0;*/
+            display: flex;
+            align-items: center;
+        }
+        fieldset input{
+            width: 100%;
+            height: 35px;
+            border-radius: 3px;
+            border: 0;
+            outline: none;
+            margin: 5px auto;
+        }
+        fieldset button{
+            height: 25px;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="warp" name="warp">
+        <div class="change">
+            <span class="chose">
+                登录
+            </span>
+            <span class="chose">
+                注册
+            </span>
+        </div>
+        <form>
+            <fieldset id="demo">
+                <div class="reg">
+                    <input type="text" placeholder="邮箱" id="mail">
+                    <input type="text" placeholder="密码" id="passwords">
+                    <input type="text" placeholder="验证码" id="code">
+                    <button onclick="chick(0)">发送验证码</button>
+                    <button type="submit" onclick="chick(1)" style="float: right;">注册</button>
+                </div>
+            </fieldset>
+            <fieldset style="display: none;" id="demo">
+                <div class="login">
+                    <input type="text" placeholder="邮箱" id="mail">
+                    <input type="text" placeholder="密码" id="passwords">
+                    <button type="submit" onclick="chick(2)">登录</button>
+                    <button type="reset" style="float: right;">重置</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="res"></div>
+    </div>
+</body>
+<script>
+var ochange=document.querySelectorAll(".chose");
+var ofield=document.querySelectorAll("#demo");
+ochange[0].onclick=function(){
+    ofield[1].style="display:block";
+    ofield[0].style="display:none";
+}
+ochange[1].onclick=function(){
+    ofield[0].style="display:block";
+    ofield[1].style="display:none";
+}
+</script>
+</html>

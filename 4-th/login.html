@@ -1,0 +1,130 @@
+<!--  HTML 5  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息</title>
+    <script type="text/javascript" src="js/demo.js" async></script>
+    <style>
+        .log{
+            width: 40px;
+            height: 40px;
+            background-color: #ddd;
+            border-radius: 50%;
+            border: 0;
+            margin: 100px auto;
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 40px;
+        }
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .text{
+            width: 30%;
+            background-color: #ddd;
+            border-radius: 5px;
+            border: 0;
+        }
+        .text li{
+            line-height: 24px;
+            text-align: center;
+        }
+        .sub{
+            background-color: #ddd;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .sub input{
+            width: 100%;
+            height: 35px;
+            margin: 5px auto;
+            border-radius: 3px;
+            border: 0;
+            outline: none;
+        }
+        .sub button{
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="log">
+        user
+    </div>
+    <div class="text" style="margin: 0 auto;">
+        <ul>
+            <li>登录状态:成功</li>
+            <li>user-email:</li>
+            <li style="cursor: pointer;">修改密码</li>
+        </ul>
+        <div class="sub" style="display: none;">
+            <input type="text" id="code" placeholder="请输入验证码"/>
+            <input type="text" id="passwords" placeholder="请输入密码">
+            <button onclick="loop(0)">获取验证码</button><button type="submit" style="float: right;" onclick="loop(1)">提交</button>
+        </div>
+    </div>
+</body>
+<script>
+    var ab=sessionStorage.getItem("message");
+    var asub=document.querySelector(".sub");
+    var oli=document.querySelectorAll("li");
+    var acode=document.querySelector("#code");
+    var pas=document.getElementById('passwords');
+    var pos1=ab.search("email");
+    var pos2=ab.search("username")
+    var email=ab.slice(pos1+8,pos2-3);
+    oli[1].innerText+=email;
+    oli[2].onclick=function(){
+        asub.style="display:block";
+    }
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+                        {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp=new XMLHttpRequest();
+                        }
+                        else
+                        {// code for IE6, IE5
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+    function loop(x){
+        switch(x){
+            case 0:
+            xmlhttp.onreadystatechange=function(){
+                console.dir(xmlhttp.responseText+xmlhttp.readyState);
+            }
+            xmlhttp.open("GET","http://120.24.93.68:8085/api/register/sendCheckCode?email="+email,true);
+            xmlhttp.send();
+            break;
+            case 1:
+                if(acode.value==""){
+                    alert("请输入验证码");
+                    break;
+                }
+                if(pas.value==""){
+                    alert("请输入密码");
+                    break;
+                }
+                var message={
+                "checkCode": acode.value,
+                "email": email,
+                "password": pas.value,
+                "role": 0
+                }
+                xmlhttp.onreadystatechange=function(){
+                        console.dir(xmlhttp.responseText+xmlhttp.readyState+" "+xmlhttp.status);
+                }
+                xmlhttp.open("POST",'http://120.24.93.68:8085/api/updatePassword',true);
+                xmlhttp.setRequestHeader("Content-type", "application/json");
+                xmlhttp.send(JSON.stringify(message));
+                break;
+            default:
+                alert("传参错误");
+                break;
+        }
+    }
+</script>
+</html>

@@ -69,6 +69,7 @@
     </div>
 </body>
 <script>
+    var c;
     var ab=sessionStorage.getItem("message");
     var asub=document.querySelector(".sub");
     var oli=document.querySelectorAll("li");
@@ -94,7 +95,15 @@
         switch(x){
             case 0:
             xmlhttp.onreadystatechange=function(){
-                console.dir(xmlhttp.responseText+xmlhttp.readyState);
+                if(xmlhttp.readyState==4){
+                    c=xmlhttp.responseText.slice(8,11);
+                    if(c=="200"){
+                        alert("验证码发送成功");
+                    }
+                    else{
+                        alert("验证码发送失败");
+                    }
+                }
             }
             xmlhttp.open("GET","http://120.24.93.68:8085/api/register/sendCheckCode?email="+email,true);
             xmlhttp.send();
@@ -115,7 +124,18 @@
                 "role": 0
                 }
                 xmlhttp.onreadystatechange=function(){
-                        console.dir(xmlhttp.responseText+xmlhttp.readyState+" "+xmlhttp.status);
+                    if(xmlhttp.readyState==4){
+                        c=xmlhttp.responseText.slice(8,11);
+                    if(c=="200"){
+                        alert("修改成功--3s后返回登录界面");
+                        setTimeout(function(){
+                            location.href="index.html";
+                        },3000);
+                    }
+                    else{
+                        alert("修改失败");
+                    }
+                    }
                 }
                 xmlhttp.open("POST",'http://120.24.93.68:8085/api/updatePassword',true);
                 xmlhttp.setRequestHeader("Content-type", "application/json");

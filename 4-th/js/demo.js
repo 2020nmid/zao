@@ -32,9 +32,8 @@ function chick(x){
                                     alert("验证码发送成功");
                                 }
                                 if(code=='100'){
-                                    alert("该用户已存在")
+                                    alert("验证码发送失败");
                                 }
-                                console.dir(xmlhttp.responseText);
                             }
                         }
                         xmlhttp.open("GET","http://120.24.93.68:8085/api/register/sendCheckCode?email="+mail,true);

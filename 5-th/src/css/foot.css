@@ -1,0 +1,14 @@
+.foot{
+    width: 100%;
+    line-height: 20px;
+    text-align: center;
+    height: 400px;
+    background-color: aqua;
+    background: url(../img/3.png) 0 0 no-repeat;
+    background-size: 100% 100%;
+}
+.warn{
+    padding: 0;
+    padding-bottom: 30px;
+    font-size: 20px;
+}

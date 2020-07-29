@@ -1,0 +1,12 @@
+.body{
+    background-color: rgb(229, 238, 206);
+    line-height: 30px;
+    text-align: center;
+    display: flex;
+    align-items:center;
+    backface-visibility: hidden;
+}
+.body img{
+    width: 400px;
+    height: 400px;
+}

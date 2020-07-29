@@ -1,0 +1,10 @@
+body{
+    font-size: 15px;
+}
+.head{
+    width: 100%;
+    line-height: 20px;
+    text-align: center;
+    height: 100px;
+    background-color: #ddd;
+}

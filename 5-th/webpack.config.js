@@ -9,7 +9,7 @@ const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 process.env.NODE_ENV = 'development'
 module.exports = {
     //入口起点
-    entry : './src/js/main.js',
+    entry : ['./src/js/main.js','./src/index.html'],
     //输出
     output: {
         //输出文件名
@@ -133,7 +133,7 @@ module.exports = {
         ]
     },
     //错误提示
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     //插件的配置
     plugins:[
         //plugins的配置

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>第四个网页</title>
+</head>
+<body>
+    <p>
+        邮箱：<input type="text" id="email">
+    </p>
+    <p>
+        密码：<input type="password" id="psw"> <span style="cursor: default;" id="eye">眼睛</span>
+    </p>
+    <p>
+        <button id="login">登录</button><button id="register">注册</button>
+    </p>
+    <script>
+        var psw = document.getElementById('psw');
+        var eye = document.getElementById('eye');
+        var register = document.getElementById('register');
+        var email = document.getElementById('email');
+        var login = document.getElementById('login');
+
+        var flag = 1;
+        eye.onclick = function () {
+            if (flag) {
+                psw.type = 'text';
+                flag = 0;
+            } else {
+                psw.type = 'password';
+                flag = 1;
+            }
+        }
+
+        function ajax(options) {
+            var xmlhttp = new XMLHttpRequest();
+            var params = '';
+            for (var attr in options.data) {
+                params += attr + '=' + options.data[attr] + '&';
+            }
+            params = params.substr(0, params.length - 1);
+            if (options.type == 'get') {
+                options.url = options.url + '?' + params;
+            }
+
+            xmlhttp.open(options.type, options.url);
+
+            if (options.type == 'post') {
+                xmlhttp.setRequestHeader('Content-Type', 'application/json');
+                xmlhttp.send(JSON.stringify(options.data))
+            } else {
+                xmlhttp.send();
+            }
+
+            xmlhttp.onload = function () {
+                var contentType = xmlhttp.getResponseHeader('Content-Type');
+                var responseText = xmlhttp.responseText;
+                if (contentType.includes('application/json')) {
+                    responseText = JSON.parse(responseText)
+                }
+                if (xmlhttp.status == 200) {
+                    options.success(responseText)
+                } else {
+                    options.error(responseText)
+                }
+                options.judge(responseText);
+            }
+        }
+
+        register.onclick = function () {
+            location.href = 'register.html'
+        }
+
+        login.addEventListener('click', function () {
+            if (psw.value != '' && email.value != '') {
+                ajax({
+                    type: 'post',
+                    url: 'http://120.24.93.68:8085/api/login',
+                    data: {
+                        "email": email.value,
+                        "password": psw.value,
+                    },
+                    success: function (data) {
+                        console.log('OK');
+                        console.log(data);
+                    },
+                    error: function (data) {
+                        console.log('error');
+                        console.log(data);
+                    },
+                    judge: function (data) {
+                        if (data.code == 200) {
+                            alert('登录成功');
+                            location.href = 'denglu_ok.html';
+                        } else if (data.code == 1001) {
+                            alert('邮箱或者密码错误');
+                        }
+                    }
+                })
+            } else if (psw.value == '' && email.value != '') {
+                alert('请输入密码')
+            } else if (email.value == '' && psw.value != '') {
+                alert('请输入邮箱')
+            } else {
+                alert('请输入登录信息')
+            }
+        })
+
+    </script>
+</body>
+</html>

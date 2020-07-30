@@ -86,6 +86,49 @@ module.exports = {
                     name: '[hash:10].[ext]',
                     outputPath: 'media'
                 }
+            },
+            {
+                //语法检查 eslint-loader eslint
+                test: /\.js$/,
+                //不检查第三方库
+                exclude: /node_modules/,
+                //优先执行
+                enforce: 'pre',
+                loader: 'eslint-loader',
+                options: {
+                    fix: true
+                }
+
+            },
+            {
+                //js基本兼容性处理babel-loader @babel @babel/preset-env
+                //按需兼容性处理core-js
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        [
+                            '@babel/preset-env',
+                            {
+                                //按需加载
+                                useBuiltIns: 'usage',
+                                //指定core-js版本
+                                corejs: {
+                                    version: 3,
+                                },
+                                //指定兼容性到那个版本的浏览器
+                                targets: {
+                                    chrome:'60',
+                                    firefox: '60',
+                                    ie: '9',
+                                    safari: '10',
+                                    edge: '17'
+                                }
+                            }
+                        ]
+                    ]
+                }
             }
         ]
     },
@@ -99,7 +142,15 @@ module.exports = {
         //html-webpack-plugin创建空的html并创建一个script标签等引入打包后的所有输出文件
         new HtmlWebpackPlugin({ 
             //复制源html文件并自动引入所有生产的资源,并输出到build文件
-            template: './src/index.html'
+            template: './src/index.html',
+            //压缩html
+            minify: {
+                //移除空格
+                collapseWhitespace: true,
+                //移除注释
+                removeComments: true
+            }
+
         }),
         new miniCssExtractPlugin({
             filename: 'css/main.css'
@@ -116,6 +167,8 @@ module.exports = {
         //端口号
         port: 3000,
         //自动打开浏览器
-        open: true
+        open: true,
+        //开启HMR
+        hot: true
     }
 }

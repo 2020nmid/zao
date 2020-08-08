@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ToDoList</title><link rel="icon" href="todo.ico"><link href="css/main.main.ec38907ce7.css" rel="stylesheet"></head><style>html, body, h1, p{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+    }</style><body><div class="head"><div class="left"><h1>ToDoList</h1><p>&lt; -- &nbsp; @ v @ &nbsp;-- &gt;</p></div><div class="right"><p class="motto"></p><p class="motto"></p><p class="author"></p></div></div><div class="warp"><div class="assignWarp"><span>ASSIGNMENT</span><form id="submit"><input type="text" placeholder="待办事件..." maxlength="28" name="assignment"> <button type="submit">+ 添加</button></form><ul class="todo"><li>正在进行--ToDo<span class="hid"></span></li></ul><ul class="done"><li>已经完成--Done<span class="hid"></span></li></ul></div></div><script src="js/runtime-%24%7Bentrypoint.name%7D.b5ec861dbf.js"></script><script src="js/vendors~main.2a65a2d90b.js"></script><script src="js/main.bae832ea1d.js"></script></body><script>/*
+        页面调整
+    */
+    var laughter = document.querySelector('.left p');
+    laughter.onmouseenter = function () {
+        laughter.innerHTML = '&lt; -- &nbsp; @ _ @ &nbsp;-- &gt;';
+        laughter.style = 'opacity: .6'
+    }
+    laughter.onmouseleave = function () {
+        laughter.innerHTML = '&lt; -- &nbsp; @ v @ &nbsp;-- &gt;';
+        laughter.style = 'opacity: 1'
+    }
+    resetSize();
+    window.onresize = resetSize;
+    function resetSize() {
+        var bodyHeight = window.innerHeight;
+        document.body.style = 'height: ' + bodyHeight + 'px';
+        var warpHeight = bodyHeight - bodyHeight*0.15 - 10;
+        document.querySelector('.warp').style= 'min-height: ' + warpHeight + 'px';
+        var right = document.querySelector('.right').offsetHeight-10;
+        var pheight = document.querySelectorAll('.right p');
+        for(let i = 0; i < pheight.length; i++ ){
+            pheight[i].style = 'height: '+ right/3 +'px; line-height: '+ right/3 +'px';
+        }
+        pheight[1].style= 'text-align: center;height: '+ right/3+'px;line-height: '+ right/3+ 'px+';
+    }</script></html>
